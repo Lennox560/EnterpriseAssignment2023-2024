@@ -17,10 +17,21 @@ namespace DataAccess.Repositories
             _airlineDbContext = airlineDbContext;
         }
         
-        public void Book(Ticket t)
+        public bool Book(Ticket t)
         {
+            var existingTicket = GetTickets().SingleOrDefault(x=>x.FlightIdFk == t.FlightIdFk
+            && x.Column == t.Column
+            && x.Row == t.Row);
+
+            if(existingTicket != null)
+            {
+                //This means that a ticket already exists for this seat on the flight
+                return false;
+            }
+
             _airlineDbContext.Tickets.Add(t);
             _airlineDbContext.SaveChanges();
+            return true;
         } 
 
         public void Cancel(Ticket t)
