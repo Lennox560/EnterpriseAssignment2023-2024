@@ -21,7 +21,8 @@ namespace DataAccess.Repositories
         {
             var existingTicket = GetTickets().SingleOrDefault(x=>x.FlightIdFk == t.FlightIdFk
             && x.Column == t.Column
-            && x.Row == t.Row);
+            && x.Row == t.Row
+            && !x.Cancelled);
 
             if(existingTicket != null)
             {
@@ -36,7 +37,7 @@ namespace DataAccess.Repositories
 
         public void Cancel(Ticket t)
         {
-            _airlineDbContext.Tickets.Remove(t);
+            t.Cancelled = true;
             _airlineDbContext.SaveChanges();
         }
 
