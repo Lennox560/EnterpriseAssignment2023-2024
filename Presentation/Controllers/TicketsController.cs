@@ -93,6 +93,31 @@ namespace Presentation.Controllers
             }
 
         }
-        
+
+        public IActionResult Tickets()
+        {
+
+            IQueryable<Ticket> list = _TicketsRepository.GetTickets();
+            //let to be set to get the tickets of the logged in user
+
+            var output = from t in list
+                         select new ListTicketViewModel()
+                         {
+                             Id = t.Id,
+                             CountryFrom = t.Flight.CountryFrom,
+                             CountryTo = t.Flight.CountryTo,
+                             DepartureDate = t.Flight.DepartureDate,
+                             ArrivalDate = t.Flight.ArrivalDate,
+                             Passport = t.Passport,
+                             FlightIdFk = t.FlightIdFk,
+                             PricePaid = t.PricePaid,
+                             Column = t.Column,
+                             Row = t.Row,
+                             Cancelled = t.Cancelled
+                         };
+
+            return View(output);
+        }
+
     }
 }
