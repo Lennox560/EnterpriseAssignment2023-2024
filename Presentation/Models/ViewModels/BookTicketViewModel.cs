@@ -10,5 +10,7 @@ namespace Presentation.Models.ViewModels
         public string Passport { get; set; }
         public decimal PricePaid { get; set; }
         public bool Cancelled { get; set; }
+        public IFormFile PassportImageFile { get; set; }
+
     }
 }

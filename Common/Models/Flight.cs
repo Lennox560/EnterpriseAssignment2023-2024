@@ -18,6 +18,7 @@ namespace Domain.Models
         public int Rows { get; set; }
         [Required(ErrorMessage = "Columns cannot be left blank")]
         public int Columns { get; set; }
+        
         [Required(ErrorMessage = "DepartureDate cannot be left blank")]
         public DateTime DepartureDate { get; set; }
         [Required(ErrorMessage = "ArrivalDate cannot be left blank")]

@@ -1,7 +1,9 @@
 ﻿using DataAccess.Repositories;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Presentation.Models.ViewModels;
+using System.IO;
 
 namespace Presentation.Controllers
 {
@@ -54,11 +56,36 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Book(BookTicketViewModel model)
+        public IActionResult Book(BookTicketViewModel model, [FromServices] IWebHostEnvironment host)
         {
             try
             {
                 var currentDate = DateTime.Now;
+
+                string relativePath = "";
+                //upload of image
+                
+                if (model.PassportImageFile != null)
+                {
+                    //1. Generate a unique filename
+                    string newFilename = Guid.NewGuid().ToString()
+                        + Path.GetExtension(model.PassportImageFile.FileName);//.jpg
+
+                    //2. Form the relative path
+                    relativePath = "/images/" + newFilename;
+
+                    //3. Form the absolute path
+                    // to save the physical file //C:\..
+                    string absolutePath = host.WebRootPath + "\\images\\" + newFilename;
+
+                    //4. save the image in the folder
+                    using (FileStream fs = new FileStream(absolutePath, FileMode.CreateNew))
+                    {
+                        model.PassportImageFile.CopyTo(fs);
+                        fs.Flush();
+                    }
+                }
+                
 
                 var existingTicket = _TicketsRepository.GetTickets().SingleOrDefault(x=>x.FlightIdFk == model.FlightId
                 && x.Column == model.Column
@@ -74,6 +101,7 @@ namespace Presentation.Controllers
                         FlightIdFk = model.FlightId,
                         Passport = model.Passport,
                         PricePaid = model.PricePaid,
+                        PassportImage = relativePath,
                         Cancelled = false
                     });
 

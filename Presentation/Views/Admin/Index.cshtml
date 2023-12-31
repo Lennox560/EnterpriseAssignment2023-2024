@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Presentation.Models.ViewModels.ListFlightViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of Flights</h1>
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["error"]
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatsAvailable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountryFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountryTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RetailPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatsAvailable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountryFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountryTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RetailPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Show", "Show", new { id = item.Id }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

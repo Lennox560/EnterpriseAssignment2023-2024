@@ -31,7 +31,7 @@ namespace Domain.Models
         public decimal PricePaid { get; set; }
         public bool Cancelled { get; set; }
         
-
+        public string? PassportImage { get; set; }
 
     }
 }
