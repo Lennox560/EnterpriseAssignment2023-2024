@@ -21,7 +21,8 @@ namespace Domain.Models
         public int Column { get; set; }
 
         [ForeignKey("Flight")]
-        public Guid FlightIdFk { get; set; }
+        public int FlightIdFk { get; set; }
+        public virtual Flight Flight { get; set; }
 
         [Required(ErrorMessage = "Passport cannot be left blank")]
         public string Passport { get; set; }
@@ -29,7 +30,7 @@ namespace Domain.Models
         [Required(ErrorMessage = "PricePaid cannot be left blank")]
         public decimal PricePaid { get; set; }
         public bool Cancelled { get; set; }
-        public virtual Flight flight { get; set; }
+        
 
 
     }

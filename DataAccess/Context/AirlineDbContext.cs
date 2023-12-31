@@ -23,7 +23,7 @@ namespace DataAccess.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Flight>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+            //builder.Entity<Flight>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
             builder.Entity<Ticket>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
         }
 

@@ -23,7 +23,7 @@ namespace DataAccess.Repositories
             return _airlineDbContext.Flights;
         }
 
-        public Flight? GetFlight(Guid id)
+        public Flight? GetFlight(int id)
         {
             return GetFlights().SingleOrDefault(x => x.Id == id);
         }

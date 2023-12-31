@@ -52,7 +52,8 @@ namespace DataAccess.Migrations
                 name: "Flights",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Rows = table.Column<int>(type: "int", nullable: false),
                     Columns = table.Column<int>(type: "int", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -180,18 +181,17 @@ namespace DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     Row = table.Column<int>(type: "int", nullable: false),
                     Column = table.Column<int>(type: "int", nullable: false),
-                    FlightIdFk = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FlightIdFk = table.Column<int>(type: "int", nullable: false),
                     Passport = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PricePaid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Cancelled = table.Column<bool>(type: "bit", nullable: false),
-                    flightId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Cancelled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Flights_flightId",
-                        column: x => x.flightId,
+                        name: "FK_Tickets_Flights_FlightIdFk",
+                        column: x => x.FlightIdFk,
                         principalTable: "Flights",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -237,9 +237,9 @@ namespace DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_flightId",
+                name: "IX_Tickets_FlightIdFk",
                 table: "Tickets",
-                column: "flightId");
+                column: "FlightIdFk");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

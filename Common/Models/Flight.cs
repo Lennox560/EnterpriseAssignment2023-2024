@@ -10,8 +10,10 @@ namespace Domain.Models
 {
     public class Flight
     {
-        [Key]
-        public Guid Id { get; set; }
+        //[Key]
+        //public Guid Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Rows cannot be left blank")]
         public int Rows { get; set; }
         [Required(ErrorMessage = "Columns cannot be left blank")]

@@ -4,7 +4,7 @@ namespace Presentation.Models.ViewModels
 {
     public class ListFlightViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public int SeatsAvailable { get; set; }
         public string CountryFrom { get; set; }
