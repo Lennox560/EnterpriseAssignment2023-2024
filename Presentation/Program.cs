@@ -1,4 +1,5 @@
 using DataAccess.Context;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,11 @@ namespace Presentation
                 .AddEntityFrameworkStores<AirlineDbContext>();
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<FlightsRepository, FlightsRepository>();
+
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

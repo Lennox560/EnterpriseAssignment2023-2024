@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AirlineDbContext))]
-    [Migration("20231230133638_FirstMigration")]
+    [Migration("20231231084310_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,8 +75,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Column")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightIdFk")
-                        .HasColumnType("int");
+                    b.Property<Guid>("FlightIdFk")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Passport")
                         .IsRequired()

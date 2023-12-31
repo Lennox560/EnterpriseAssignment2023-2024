@@ -73,8 +73,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Column")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightIdFk")
-                        .HasColumnType("int");
+                    b.Property<Guid>("FlightIdFk")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Passport")
                         .IsRequired()

@@ -21,7 +21,7 @@ namespace Domain.Models
         public int Column { get; set; }
 
         [ForeignKey("Flight")]
-        public int FlightIdFk { get; set; }
+        public Guid FlightIdFk { get; set; }
 
         [Required(ErrorMessage = "Passport cannot be left blank")]
         public string Passport { get; set; }

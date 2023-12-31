@@ -180,7 +180,7 @@ namespace DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     Row = table.Column<int>(type: "int", nullable: false),
                     Column = table.Column<int>(type: "int", nullable: false),
-                    FlightIdFk = table.Column<int>(type: "int", nullable: false),
+                    FlightIdFk = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Passport = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PricePaid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Cancelled = table.Column<bool>(type: "bit", nullable: false),
