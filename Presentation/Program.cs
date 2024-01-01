@@ -1,5 +1,6 @@
 using DataAccess.Context;
 using DataAccess.Repositories;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,8 @@ namespace Presentation
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<FlightsRepository, FlightsRepository>();
-            builder.Services.AddScoped(typeof(TicketsRepository));
+            string absolutePath = builder.Environment.ContentRootPath + "Data\\Products.json";
+            builder.Services.AddScoped<ITickets, TicketsRepository>();
 
             var app = builder.Build();
 
