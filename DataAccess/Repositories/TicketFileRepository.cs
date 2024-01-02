@@ -31,7 +31,8 @@ namespace DataAccess.Repositories
         {
             t.Id = Guid.NewGuid();
 
-            var existingTicket = GetTickets().SingleOrDefault(x => x.FlightIdFk == t.FlightIdFk
+            var existingTicket = GetTickets().SingleOrDefault(x => 
+            x.FlightIdFk == t.FlightIdFk
             && x.Column == t.Column
             && x.Row == t.Row
             && !x.Cancelled);
@@ -87,6 +88,11 @@ namespace DataAccess.Repositories
                 }
 
             }
+        }
+
+        public int GetSeatAmount(int t)
+        {
+            return GetTickets().Where(x => x.FlightIdFk == t && !x.Cancelled).Count();
         }
     }
 }

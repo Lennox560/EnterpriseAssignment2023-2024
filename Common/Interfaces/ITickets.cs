@@ -14,5 +14,7 @@ namespace Domain.Interfaces
 
         IQueryable<Ticket> GetTickets();
 
+        int GetSeatAmount(int t);
+
     }
 }

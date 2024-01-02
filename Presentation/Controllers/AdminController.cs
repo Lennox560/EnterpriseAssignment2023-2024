@@ -1,4 +1,5 @@
 ﻿using DataAccess.Repositories;
+using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models.ViewModels;
@@ -8,9 +9,9 @@ namespace Presentation.Controllers
     public class AdminController : Controller
     {
         private FlightsRepository _FlightsRepository;
-        private TicketsRepository _TicketsRepository;
+        private ITickets _TicketsRepository;
 
-        public AdminController(FlightsRepository FlightsRepository, TicketsRepository TicketsRepository)
+        public AdminController(FlightsRepository FlightsRepository, ITickets TicketsRepository)
         {
             _FlightsRepository = FlightsRepository;
             _TicketsRepository = TicketsRepository;
@@ -31,7 +32,7 @@ namespace Presentation.Controllers
                              DepartureDate = f.DepartureDate,
                              ArrivalDate = f.ArrivalDate,
                              RetailPrice = f.WholesalePrice * f.CommissionRate,
-                             SeatsAvailable = f.Columns * f.Rows - (_TicketsRepository.GetTickets().Where(x => x.FlightIdFk == f.Id && !x.Cancelled).Count())
+                             SeatsAvailable = f.Columns * f.Rows - _TicketsRepository.GetSeatAmount(f.Id)
                          };
             return View(output);
         }
@@ -47,10 +48,10 @@ namespace Presentation.Controllers
                          select new ListTicketViewModel()
                          {
                              Id = t.Id,
-                             CountryFrom = t.Flight.CountryFrom,
-                             CountryTo = t.Flight.CountryTo,
-                             DepartureDate = t.Flight.DepartureDate,
-                             ArrivalDate = t.Flight.ArrivalDate,
+                             CountryFrom = _FlightsRepository.GetFlight(t.FlightIdFk).CountryFrom,
+                             CountryTo = _FlightsRepository.GetFlight(t.FlightIdFk).CountryTo,
+                             DepartureDate = _FlightsRepository.GetFlight(t.FlightIdFk).DepartureDate,
+                             ArrivalDate = _FlightsRepository.GetFlight(t.FlightIdFk).ArrivalDate,
                              Passport = t.Passport,
                              FlightIdFk = t.FlightIdFk,
                              PricePaid = t.PricePaid,
@@ -74,10 +75,10 @@ namespace Presentation.Controllers
                 TicketViewModel myTicket = new TicketViewModel()
                 {
                     Id = t.Id,
-                    CountryFrom = t.Flight.CountryFrom,
-                    CountryTo = t.Flight.CountryTo,
-                    DepartureDate = t.Flight.DepartureDate,
-                    ArrivalDate = t.Flight.ArrivalDate,
+                    CountryFrom = _FlightsRepository.GetFlight(t.FlightIdFk).CountryFrom,
+                    CountryTo = _FlightsRepository.GetFlight(t.FlightIdFk).CountryTo,
+                    DepartureDate = _FlightsRepository.GetFlight(t.FlightIdFk).DepartureDate,
+                    ArrivalDate = _FlightsRepository.GetFlight(t.FlightIdFk).ArrivalDate,
                     Passport = t.Passport,
                     FlightIdFk = t.FlightIdFk,
                     PricePaid = t.PricePaid,

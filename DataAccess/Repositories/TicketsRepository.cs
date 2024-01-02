@@ -46,5 +46,10 @@ namespace DataAccess.Repositories
         {
             return _airlineDbContext.Tickets;
         }
+
+        public int GetSeatAmount(int t)
+        {
+            return GetTickets().Where(x => x.FlightIdFk == t && !x.Cancelled).Count();
+        }
     }
 }

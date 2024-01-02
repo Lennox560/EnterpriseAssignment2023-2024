@@ -22,9 +22,11 @@ namespace Presentation
                 .AddEntityFrameworkStores<AirlineDbContext>();
             builder.Services.AddControllersWithViews();
 
+            string absolutePath = builder.Environment.ContentRootPath + "Data\\Tickets.json";
+            builder.Services.AddScoped<ITickets, TicketFileRepository>(x=> new TicketFileRepository(absolutePath));
             builder.Services.AddScoped<FlightsRepository, FlightsRepository>();
-            string absolutePath = builder.Environment.ContentRootPath + "Data\\Products.json";
-            builder.Services.AddScoped<ITickets, TicketsRepository>();
+            
+            
 
             var app = builder.Build();
 
