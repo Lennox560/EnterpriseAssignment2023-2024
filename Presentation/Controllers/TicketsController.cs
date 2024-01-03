@@ -1,6 +1,8 @@
 ﻿using DataAccess.Repositories;
 using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Presentation.Models.ViewModels;
@@ -12,12 +14,13 @@ namespace Presentation.Controllers
     {
         private FlightsRepository _FlightsRepository;
         private ITickets _TicketsRepository;
-        //
+        private readonly UserManager<User> _userManager;
 
-        public TicketsController(FlightsRepository FlightsRepository, ITickets TicketsRepository)
+        public TicketsController(FlightsRepository FlightsRepository, ITickets TicketsRepository, UserManager<User> userManager)
         {
             _FlightsRepository = FlightsRepository;
             _TicketsRepository = TicketsRepository;
+            _userManager = userManager;
         }
 
 
@@ -45,14 +48,19 @@ namespace Presentation.Controllers
 
         
         [HttpGet]
-        public IActionResult Book(int flight, decimal price)
+        public async Task<IActionResult> Book(int flight, decimal price)
         {
+            var user = await _userManager.GetUserAsync(User);
+            string passportNumber = user?.passport;
+
             BookTicketViewModel myModel = new BookTicketViewModel
             {
                 FlightId = flight,
                 PricePaid = price,
+                Passport = passportNumber,
                 Row = _FlightsRepository.GetFlight(flight).Rows,
                 Column = _FlightsRepository.GetFlight(flight).Columns
+
             };
 
             return View(myModel); 
@@ -125,10 +133,13 @@ namespace Presentation.Controllers
 
         }
 
-        public IActionResult Tickets()
+        [Authorize]
+        public async Task<IActionResult> TicketsAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            string passportNumber = user.passport;
 
-            IQueryable<Ticket> list = _TicketsRepository.GetTickets();
+            IQueryable<Ticket> list = _TicketsRepository.GetTickets().Where(x=> x.Passport == passportNumber);
             //let to be set to get the tickets of the logged in user
 
             var output = from t in list

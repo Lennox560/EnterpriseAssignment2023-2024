@@ -22,6 +22,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+
         <form asp-action="Book" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
@@ -132,4 +133,17 @@
             }
         });
     </script>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <script>
+            window.onload = function () {
+                var confirmation = confirm('Would you like to login first?');
+                if (confirmation) {
+                    window.location.href = "/Identity/Account/Login"; // Redirect to the login page
+                }
+            };
+        </script>
+    }
+    
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Context
 {
-    public class AirlineDbContext: IdentityDbContext
+    public class AirlineDbContext: IdentityDbContext<User>
     {
         public AirlineDbContext(DbContextOptions<AirlineDbContext> options)
             : base(options)
@@ -25,6 +26,7 @@ namespace DataAccess.Context
             base.OnModelCreating(builder);
             //builder.Entity<Flight>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
             builder.Entity<Ticket>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

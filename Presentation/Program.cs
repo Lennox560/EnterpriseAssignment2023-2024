@@ -1,6 +1,7 @@
 using DataAccess.Context;
 using DataAccess.Repositories;
 using Domain.Interfaces;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,13 @@ namespace Presentation
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AirlineDbContext>();
             builder.Services.AddControllersWithViews();
 
             string absolutePath = builder.Environment.ContentRootPath + "Data\\Tickets.json";
             builder.Services.AddScoped<ITickets, TicketFileRepository>(x=> new TicketFileRepository(absolutePath));
-            builder.Services.AddScoped<FlightsRepository, FlightsRepository>();
+            builder.Services.AddScoped<FlightsRepository>();
             
             
 
