@@ -32,7 +32,8 @@ namespace Presentation.Controllers
                              DepartureDate = f.DepartureDate,
                              ArrivalDate = f.ArrivalDate,
                              RetailPrice = f.WholesalePrice * f.CommissionRate,
-                             SeatsAvailable = f.Columns * f.Rows - _TicketsRepository.GetSeatAmount(f.Id)
+                             TotalSeats = f.Columns * f.Rows,
+                             BookedSeats = _TicketsRepository.GetSeatAmount(f.Id)
                          };
             return View(output);
         }

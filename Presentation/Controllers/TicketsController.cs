@@ -41,7 +41,8 @@ namespace Presentation.Controllers
                              DepartureDate = f.DepartureDate,
                              ArrivalDate = f.ArrivalDate,
                              RetailPrice = f.WholesalePrice * f.CommissionRate,
-                             SeatsAvailable = f.Columns * f.Rows - _TicketsRepository.GetSeatAmount(f.Id)
+                             BookedSeats = _TicketsRepository.GetSeatAmount(f.Id),
+                             TotalSeats = f.Columns * f.Rows
                          };
             return View(output);
         }
@@ -140,7 +141,6 @@ namespace Presentation.Controllers
             string passportNumber = user.passport;
 
             IQueryable<Ticket> list = _TicketsRepository.GetTickets().Where(x=> x.Passport == passportNumber);
-            //let to be set to get the tickets of the logged in user
 
             var output = from t in list
                          select new ListTicketViewModel()
@@ -159,6 +159,22 @@ namespace Presentation.Controllers
                          };
 
             return View(output);
+        }
+
+        [HttpPost]
+        public IActionResult Cancel(Guid TicketToCancel)
+        {
+            try
+            {
+                _TicketsRepository.Cancel(TicketToCancel);
+
+                TempData["message"] = "Ticket cancelled successfully!";
+                return RedirectToAction("Tickets");
+            }catch ( Exception ex)
+            {
+                TempData["error"] = "Ticket not cancelled!";
+                return RedirectToAction("Tickets");
+            }
         }
 
     }

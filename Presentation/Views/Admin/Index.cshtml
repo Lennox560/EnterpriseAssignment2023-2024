@@ -19,7 +19,10 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SeatsAvailable)
+                @Html.DisplayNameFor(model => model.TotalSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookedSeats)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CountryFrom)
@@ -46,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SeatsAvailable)
+                    @Html.DisplayFor(modelItem => item.TotalSeats )
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.BookedSeats)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CountryFrom)

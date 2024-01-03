@@ -10,7 +10,7 @@ namespace Domain.Interfaces
     public interface ITickets
     {
         bool Book(Ticket t);
-        void Cancel(Ticket t);
+        void Cancel(Guid t);
 
         IQueryable<Ticket> GetTickets();
 

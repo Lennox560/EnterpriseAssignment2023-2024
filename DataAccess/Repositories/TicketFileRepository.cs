@@ -53,13 +53,18 @@ namespace DataAccess.Repositories
             }
         }
 
-        public void Cancel(Ticket t)
+        public void Cancel(Guid t)
         {
             var myList = GetTickets();
-            var toCancel = myList.FirstOrDefault(x=> x.Id == t.Id);
-            if(toCancel != null)
+            if(myList != null)
             {
-                toCancel.Cancelled = true;
+                foreach(var item in myList)
+                {
+                    if(item.Id == t)
+                    {
+                        item.Cancelled = true;
+                    }
+                }
             }
             string jsonString = JsonSerializer.Serialize(myList);
             System.IO.File.WriteAllText(filePath, jsonString);

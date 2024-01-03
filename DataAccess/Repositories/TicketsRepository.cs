@@ -36,10 +36,14 @@ namespace DataAccess.Repositories
             return true;
         } 
 
-        public void Cancel(Ticket t)
+        public void Cancel(Guid t)
         {
-            t.Cancelled = true;
-            _airlineDbContext.SaveChanges();
+            var ticket = GetTickets().SingleOrDefault(x => x.Id == t);
+            if(ticket != null)
+            {
+                ticket.Cancelled = true;
+                _airlineDbContext.SaveChanges();
+            }
         }
 
         public IQueryable<Ticket> GetTickets()

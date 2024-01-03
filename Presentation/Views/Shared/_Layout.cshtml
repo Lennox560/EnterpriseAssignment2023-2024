@@ -30,7 +30,7 @@
                         </li>
                         
 
-                        @if (User.IsInRole("1"))
+                        @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Flight List</a>
@@ -44,7 +44,6 @@
         </nav>
     </header>
     <div class="container">
-        <p>User is Admin: @User.IsInRole("1")</p>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

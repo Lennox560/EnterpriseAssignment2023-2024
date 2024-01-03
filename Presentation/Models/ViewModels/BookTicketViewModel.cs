@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Presentation.Models.Attributes;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Presentation.Models.ViewModels
 {
@@ -11,6 +12,8 @@ namespace Presentation.Models.ViewModels
         public decimal PricePaid { get; set; }
         public bool Cancelled { get; set; }
         public IFormFile PassportImageFile { get; set; }
+
+        
 
     }
 }

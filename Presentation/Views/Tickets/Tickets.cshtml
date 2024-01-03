@@ -6,6 +6,20 @@
 
 <h1>Tickets</h1>
 
+@if (TempData["message"] != null)
+{
+<div class="alert alert-success" role="alert">
+    @TempData["message"]
+</div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["error"]
+    </div>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -82,7 +96,14 @@
                 @Html.DisplayFor(modelItem => item.Cancelled)
             </td>
             <td>
-                @Html.ActionLink("Cancel", "Cancel", new { /* id=item.PrimaryKey */ })
+                @if(item.DepartureDate > DateTime.Now && !item.Cancelled){
+                        <form asp-controller="Tickets" asp-action="Cancel" method="post">
+                            <input type="hidden" name="TicketToCancel" value="@item.Id" />
+                            <button type="submit" onclick="return confirm('Are you sure?')">Cancel Ticket</button>
+                        </form>
+                    //<a href="\Tickets\Cancel?id=@item.Id" onclick='return window.confirm("Are you sure?")'>Cancel</a>
+                   //@Html.ActionLink("Cancel", "Cancel", new { id=item.Id })
+                }
         </tr>
 }
     </tbody>
